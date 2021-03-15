@@ -32,3 +32,7 @@ Rails/Delegate:
 Rails/LexicallyScopedActionFilter:
   Exclude:
     - app/controllers/api/v1/api_controller.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
