@@ -4,6 +4,7 @@ describe 'PUT api/v1/user/', type: :request do
 
   context 'with valid params' do
     let(:params) { { user: { username: 'new username' } } }
+    let(:gender_param) { { user: { gender: 'male' } } }
 
     it 'returns success' do
       put api_v1_user_path, params: params, headers: auth_headers, as: :json
@@ -13,6 +14,11 @@ describe 'PUT api/v1/user/', type: :request do
     it 'updates the user' do
       put api_v1_user_path, params: params, headers: auth_headers, as: :json
       expect(user.reload.username).to eq(params[:user][:username])
+    end
+
+    it 'updates the gender' do
+      put api_v1_user_path, params: gender_param, headers: auth_headers, as: :json
+      expect(user.reload.gender).to eq(gender_param[:user][:gender])
     end
 
     it 'returns the user' do
@@ -25,6 +31,7 @@ describe 'PUT api/v1/user/', type: :request do
 
   context 'with invalid data' do
     let(:params) { { user: { email: 'notanemail' } } }
+    let(:gender_param) { { user: { gender: 'invalidData' } } }
 
     it 'does not return success' do
       put api_v1_user_path, params: params, headers: auth_headers, as: :json
@@ -34,6 +41,11 @@ describe 'PUT api/v1/user/', type: :request do
     it 'does not update the user' do
       put api_v1_user_path, params: params, headers: auth_headers, as: :json
       expect(user.reload.email).to_not eq(params[:email])
+    end
+
+    it 'not a valid gender' do
+      put api_v1_user_path, params: gender_param, headers: auth_headers, as: :json
+      expect(json[:error]).to include('is not a valid gender')
     end
 
     it 'returns the error' do

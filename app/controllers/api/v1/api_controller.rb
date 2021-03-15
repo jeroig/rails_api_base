@@ -13,6 +13,7 @@ module Api
       rescue_from ActiveRecord::RecordNotFound,        with: :render_not_found
       rescue_from ActiveRecord::RecordInvalid,         with: :render_record_invalid
       rescue_from ActionController::ParameterMissing,  with: :render_parameter_missing
+      rescue_from ArgumentError,                       with: :render_argument_error
 
       def status
         render json: { online: true }
@@ -33,6 +34,11 @@ module Api
       def render_parameter_missing(exception)
         logger.info { exception } # for logging
         render json: { error: I18n.t('api.errors.missing_param') }, status: :unprocessable_entity
+      end
+
+      def render_argument_error(exception)
+        logger.info { exception } # for logging
+        render json: { error: exception.message }, status: :unprocessable_entity
       end
     end
   end
