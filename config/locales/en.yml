@@ -10,3 +10,11 @@ en:
       invalid_content_type: Invalid content type header
       missing_param: A required param is missing
       not_found: Couldn't find the record
+  activerecord:
+    attributes:
+      user:
+        genders:
+          male: Male
+          female: Female
+          not_sure: Not Sure
+          prefer_not_to_disclose: Prefer not to disclose
