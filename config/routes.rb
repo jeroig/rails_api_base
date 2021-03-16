@@ -16,11 +16,11 @@ Rails.application.routes.draw do
         resource :user, only: %i[update show]
       end
 
+      resources :topics, only: %i[index]
+
       resources :settings, only: [] do
         get :must_update, on: :collection
       end
     end
   end
-
-  # resources :topics
 end

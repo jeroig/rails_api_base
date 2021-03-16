@@ -13,6 +13,14 @@
 #
 FactoryBot.define do
   factory :topic do
-    name { "MyString" }
+    name { Faker::Name.unique.name }
+    after(:build) do |topic|
+      topic.image.attach(
+        io: File.open(Rails.root.join('spec', 'factories', 'images',
+                                      'topic_image.jpeg')),
+        filename: 'topic_image.jpeg',
+        content_type: 'image/jpeg'
+      )
+    end
   end
 end
