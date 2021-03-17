@@ -10,6 +10,12 @@ ActiveAdmin.register Topic do
   #   permitted
   # end
 
+  controller do
+    def scoped_collection
+      super.includes(image_attachment: :blob)
+    end
+  end
+
   # Documentation to support and ActiveStorage field in ActiveAdmin
   # https://medium.com/@maris.cilitis/using-ruby-on-rails-active-storage-image-uploads-for-active-admin-backed-resources-5638a9ca0b46
   form do |f|
