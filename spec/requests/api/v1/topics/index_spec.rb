@@ -11,8 +11,8 @@ describe 'GET api/v1/topic', type: :request do
   end
 
   it 'list all topic existing in DataBase' do
-    one_topic.save
-    two_topic.save
+    one_topic.save!
+    two_topic.save!
     subject
     expect(JSON.parse(response.body).size).to eq(2)
   end

@@ -1,0 +1,500 @@
+FORMAT: 1A
+# Rails API Base
+
+# Group Passwords
+
+## Create Password [api/v1/users/password]
+
+### Create [POST]
+
++ Request Bad
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: maye@lindgren.biz
+
+    + Body
+
+            {"email":"notvalid@example.com"}
+
++ Response 404 ()
+
+    + Body
+
+            {
+              "error": "Unable to find user with email 'notvalid@example.com'."
+            }
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: kanesha_lowe@jenkins-moore.com
+
+    + Body
+
+            {"email":"kanesha_lowe@jenkins-moore.com"}
+
++ Response 200 ()
+
+    + Body
+
+            {
+              "success": true,
+              "message": "An email has been sent to 'kanesha_lowe@jenkins-moore.com' containing instructions for resetting your password."
+            }
+
+## Update Password [api/v1/users/password]
+
+### Update [PUT]
+
++ Request Bad
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: vance@prosacco.biz
+
+    + Body
+
+            {"password":"123456789","password_confirmation":""}
+
++ Response 422 ()
+
+    + Headers
+
+            access-token: 1234567890123456789012
+            token-type: Bearer
+            client: abcdefghijklmnopqrstuv
+            expiry: 1679492533
+            uid: vance@prosacco.biz
+
+    + Body
+
+            {
+              "success": false,
+              "errors": {
+                "password_confirmation": [
+                  "doesn't match Password"
+                ],
+                "full_messages": [
+                  "Password confirmation doesn't match Password"
+                ]
+              }
+            }
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: randal@paucek.name
+
+    + Body
+
+            {"password":"123456789","password_confirmation":"123456789"}
+
++ Response 200 ()
+
+    + Headers
+
+            access-token: 1234567890123456789012
+            token-type: Bearer
+            client: abcdefghijklmnopqrstuv
+            expiry: 1679492533
+            uid: randal@paucek.name
+
+    + Body
+
+            {
+              "success": true,
+              "data": {
+                "email": "randal@paucek.name",
+                "id": 39,
+                "uid": "randal@paucek.name",
+                "allow_password_change": false,
+                "first_name": "Su Kub",
+                "last_name": "Dickens",
+                "username": "johnetta_grady",
+                "created_at": "2021-03-22T13:42:13.339Z",
+                "updated_at": "2021-03-22T13:42:13.514Z",
+                "provider": "email",
+                "gender": null
+              },
+              "message": "Your password has been successfully updated."
+            }
+
+## Edit Password [api/v1/users/password/edit]
+
+### Edit [GET]
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: dale.abshire@doyle.org
+
++ Response 302 ()
+
+    + Body
+
+            <html><body>You are being <a href="http://127.0.0.1:3000?access-token=1234567890123456789012&amp;client=abcdefghijklmnopqrstuv&amp;client_id=abcdefghijklmnopqrstuv&amp;config=&amp;expiry=1679492533&amp;reset_password=true&amp;token=1234567890123456789012&amp;uid=dale.abshire%40doyle.org">redirected</a>.</body></html>
+
+# Group Sessions
+
+## Session [api/v1/users/sign_in]
+
+### Create [POST]
+
++ Request Bad
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: louanne.nicolas@oreilly.biz
+
+    + Body
+
+            {"user":{"email":"louanne.nicolas@oreilly.biz","password":"wrong-password"}}
+
++ Response 401 ()
+
+    + Body
+
+            {
+              "error": "Invalid login credentials. Please try again."
+            }
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: cornelius@rowe.biz
+
+    + Body
+
+            {"user":{"email":"cornelius@rowe.biz","password":"T88dNvWyK3k"}}
+
++ Response 200 ()
+
+    + Headers
+
+            access-token: 1234567890123456789012
+            token-type: Bearer
+            client: abcdefghijklmnopqrstuv
+            expiry: 1679492533
+            uid: cornelius@rowe.biz
+
+    + Body
+
+            {
+              "user": {
+                "email": "cornelius@rowe.biz",
+                "id": 41,
+                "uid": "cornelius@rowe.biz",
+                "allow_password_change": false,
+                "first_name": "Malcolm Murray",
+                "last_name": "Sauer",
+                "username": "art",
+                "created_at": "2021-03-22T13:42:13.796Z",
+                "updated_at": "2021-03-22T13:42:13.971Z",
+                "provider": "email",
+                "gender": null
+              }
+            }
+
+## Session [api/v1/users/sign_out]
+
+### Delete [DELETE]
+
++ Request Bad
+
+    + Headers
+
+            Access-Token: notvalidtoken
+            Client: abcdefghijklmnopqrstuv
+            Uid: ines@zieme-powlowski.co
+
++ Response 404 ()
+
+    + Body
+
+            {
+              "error": "User was not found or was not logged in."
+            }
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: mariano@wilderman.biz
+
++ Response 200 ()
+
+    + Body
+
+            {
+              "success": true
+            }
+
+# Group Settings
+
+## Must Update [api/v1/settings/must_update]
+
+### Get [GET]
+
++ Request Bad
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: buck@crist-bradtke.net
+
++ Response 200 ()
+
+    + Body
+
+            {
+              "must_update": true
+            }
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: dorene@murazik.com
+
++ Response 200 ()
+
+    + Body
+
+            {
+              "must_update": false
+            }
+
+# Group Status
+
+## Status [api/v1/status]
+
+### Get [GET]
+
++ Request Ok
+
++ Response 200 ()
+
+    + Body
+
+            {
+              "online": true
+            }
+
+# Group Topics
+
+## List Topics [api/v1/topics]
+
+### Index [GET]
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: lorrine@hoppe.biz
+
++ Response 200 ()
+
+    + Headers
+
+            access-token: 1234567890123456789012
+            token-type: Bearer
+            client: abcdefghijklmnopqrstuv
+            expiry: 1679492535
+            uid: lorrine@hoppe.biz
+
+    + Body
+
+            [
+              {
+                "id": 1,
+                "name": "Michal Bechtelar PhD",
+                "created_at": "2021-03-22T13:42:15.208Z",
+                "updated_at": "2021-03-22T13:42:15.240Z",
+                "image": "http://example.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--ea48098fa050f36041464a62b96b99e5a48e2db8/topic_image.jpeg"
+              }
+            ]
+
+# Group Users
+
+## Create User [api/v1/users]
+
+### Create [POST]
+
++ Request Bad
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: johnie_wisoky@breitenberg-kozey.name
+
+    + Body
+
+            {"user":{"email":"not-valid","password":"CwOfD5gYo0S","username":"euna","first_name":"Len Connelly","last_name":"Sipes","uid":"70064ca2-30ee-4fea-8bff-719e7ad06a7f"}}
+
++ Response 422 ()
+
+    + Body
+
+            {
+              "status": "error",
+              "data": {
+                "id": null,
+                "email": "not-valid",
+                "allow_password_change": false,
+                "first_name": "Len Connelly",
+                "last_name": "Sipes",
+                "username": "euna",
+                "created_at": null,
+                "updated_at": null,
+                "provider": "email",
+                "uid": "not-valid",
+                "gender": null
+              },
+              "errors": {
+                "email": [
+                  "is not an email"
+                ],
+                "full_messages": [
+                  "Email is not an email"
+                ]
+              }
+            }
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: laine@leffler-thiel.org
+
+    + Body
+
+            {"user":{"email":"cathi@lubowitz.biz","password":"7OwOdHxNdI7wVq","username":"cecila_cummings","first_name":"Darline Heller","last_name":"Quitzon","uid":"24815cb7-5fc9-470f-a261-ae3561717460"}}
+
++ Response 200 ()
+
+    + Headers
+
+            access-token: 1234567890123456789012
+            token-type: Bearer
+            client: abcdefghijklmnopqrstuv
+            expiry: 1679492534
+            uid: cathi@lubowitz.biz
+
+    + Body
+
+            {
+              "user": {
+                "id": 47,
+                "email": "cathi@lubowitz.biz",
+                "allow_password_change": false,
+                "first_name": "Darline Heller",
+                "last_name": "Quitzon",
+                "username": "cecila_cummings",
+                "created_at": "2021-03-22T13:42:14.685Z",
+                "updated_at": "2021-03-22T13:42:14.746Z",
+                "provider": "email",
+                "uid": "cathi@lubowitz.biz",
+                "gender": null
+              }
+            }
+
+## Update User [api/v1/user]
+
+### Update [PUT]
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: sang_wolf@nikolaus-dickinson.com
+
+    + Body
+
+            {"user":{"username":"new username"}}
+
++ Response 200 ()
+
+    + Headers
+
+            access-token: 1234567890123456789012
+            token-type: Bearer
+            client: abcdefghijklmnopqrstuv
+            expiry: 1679492534
+            uid: sang_wolf@nikolaus-dickinson.com
+
+    + Body
+
+            {
+              "user": {
+                "id": 44,
+                "email": "sang_wolf@nikolaus-dickinson.com",
+                "name": "Andy Pagac Nolan",
+                "username": "new username",
+                "gender": null
+              }
+            }
+
+## Show User [api/v1/user]
+
+### Show [GET]
+
++ Request Ok
+
+    + Headers
+
+            Access-Token: 1234567890123456789012
+            Client: abcdefghijklmnopqrstuv
+            Uid: pattie@jaskolski-hilpert.net
+
++ Response 200 ()
+
+    + Headers
+
+            access-token: 1234567890123456789012
+            token-type: Bearer
+            client: abcdefghijklmnopqrstuv
+            expiry: 1679492534
+            uid: pattie@jaskolski-hilpert.net
+
+    + Body
+
+            {
+              "user": {
+                "id": 48,
+                "email": "pattie@jaskolski-hilpert.net",
+                "name": "Ludivina Stamm LLD Witting",
+                "username": "marcos",
+                "gender": null
+              }
+            }

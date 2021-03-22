@@ -22,7 +22,11 @@ ActiveAdmin.register Topic do
     f.inputs 'Details' do
       f.input :name
       f.input :image, as: :file,
-                      hint: f.object.image.attached? ? image_tag(f.object.image.variant(resize: '100x100')) : ''
+                      hint: if f.object.image.attached?
+                              image_tag(f.object.image.variant(resize: '100x100'))
+                            else
+                              ''
+                            end
       # f.file_field :image, as: :file
     end
     actions
