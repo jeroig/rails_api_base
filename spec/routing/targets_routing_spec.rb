@@ -33,7 +33,8 @@ describe Api::V1::TargetsController, type: :routing do
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/api/v1/targets/1').to route_to('api/v1/targets#destroy', id: '1', format: :json)
+      expect(delete: '/api/v1/targets/1').to route_to('api/v1/targets#destroy', id: '1',
+                                                                                format: :json)
     end
   end
 end

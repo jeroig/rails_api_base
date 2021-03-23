@@ -9,7 +9,13 @@ class TargetPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    record.user_id == user.id
+    # or true - because the Scope filter by current_user
+  end
+
+  def destroy?
+    record.user_id == user.id
+    # or true - because the Scope filter by current_user
   end
 
   class Scope < Scope

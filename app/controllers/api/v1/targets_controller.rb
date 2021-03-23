@@ -1,7 +1,7 @@
 module Api
   module V1
     class TargetsController < Api::V1::ApiController
-      before_action :set_target, only: %i[show update destroy]
+      before_action :set_target, only: %i[show destroy]
 
       # GET /targets
       # GET /targets.json
@@ -27,21 +27,11 @@ module Api
         end
       end
 
-      # PATCH/PUT /targets/1
-      # PATCH/PUT /targets/1.json
-      # def update
-      #   if @target.update(target_params)
-      #     render :show, status: :ok
-      #   else
-      #     render json: @target.errors, status: :unprocessable_entity
-      #   end
-      # end
-
-      # DELETE /targets/1
       # DELETE /targets/1.json
-      # def destroy
-      #   @target.destroy
-      # end
+      def destroy
+        authorize @target, :destroy?
+        @target.destroy!
+      end
 
       private
 
