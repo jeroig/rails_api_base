@@ -20,11 +20,11 @@
 #
 FactoryBot.define do
   factory :target do
-    # user { nil }
-    # topic { nil }
+    user { User }
+    topic { Topic }
     title { Faker::Name.unique.name }
     latitude { Faker::Address.latitude }
     longitude { Faker::Address.longitude }
-    radius { Faker::Number.between(from: 1, to: 40) }
+    radius { Faker::Number.between(from: 1, to: 5) }
   end
 end

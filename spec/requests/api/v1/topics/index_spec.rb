@@ -1,7 +1,6 @@
 describe 'GET api/v1/topic', type: :request do
   let(:user) { create(:user) }
-  let(:one_topic) { create(:topic) }
-  let(:two_topic) { create(:topic) }
+  let(:qt_topics) { rand(1..3) }
 
   subject { get api_v1_topics_path, headers: auth_headers, as: :json }
 
@@ -11,9 +10,8 @@ describe 'GET api/v1/topic', type: :request do
   end
 
   it 'list all topic existing in DataBase' do
-    one_topic.save!
-    two_topic.save!
+    1.upto(qt_topics) { create(:topic).save! }
     subject
-    expect(JSON.parse(response.body).size).to eq(2)
+    expect(JSON.parse(response.body).size).to eq(qt_topics)
   end
 end
