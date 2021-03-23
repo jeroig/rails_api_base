@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_131428) do
+ActiveRecord::Schema.define(version: 2021_03_22_172731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -109,6 +109,20 @@ ActiveRecord::Schema.define(version: 2021_03_16_131428) do
     t.index ["key"], name: "index_settings_on_key", unique: true
   end
 
+  create_table "targets", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "topic_id", null: false
+    t.string "title"
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
+    t.integer "radius"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_targets_on_topic_id"
+    t.index ["user_id"], name: "index_targets_on_user_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -143,4 +157,6 @@ ActiveRecord::Schema.define(version: 2021_03_16_131428) do
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "exception_hunter_errors", "exception_hunter_error_groups", column: "error_group_id"
+  add_foreign_key "targets", "topics"
+  add_foreign_key "targets", "users"
 end
