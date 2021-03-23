@@ -18,14 +18,10 @@ describe 'GET api/v1/targets/:id', type: :request do
   end
 
   context 'when record is not found' do
-    # let(:user2) { create(:user) }
-    # let(:target2) { create(:target, user: user2, topic: topic) }
+    let(:other_user) { create(:user) }
+    let(:other_target) { create(:target, user: other_user, topic: topic) }
     it 'returns status 404 not found' do
-      allow_any_instance_of(Api::V1::TargetsController).to receive(
-        :current_user
-      ).and_raise(ActiveRecord::RecordNotFound)
-      subject
-      # get api_v1_target_path(target2), headers: auth_headers, as: :json
+      get api_v1_target_path(other_target), headers: auth_headers, as: :json
       expect(response).to have_http_status(:not_found)
     end
   end
