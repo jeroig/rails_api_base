@@ -20,9 +20,15 @@
 #
 describe Target do
   describe 'validations' do
-    subject { build :target }
     context 'when create a target' do
-      xit { is_expected.to validate_presence_of(:title) }
+      let(:user)  { create(:user) }
+      let(:topic) { create(:topic) }
+      it 'test' do
+        10.times { create(:target, user: user, topic: topic) }
+        new_target = build(:target, user: user, topic: topic)
+        expect(new_target).to be_invalid
+        expect(new_target.errors[:target_limit]).to include('You already have 10 targets')
+      end
     end
   end
 end

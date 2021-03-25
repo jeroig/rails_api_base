@@ -46,7 +46,7 @@ describe 'POST api/v1/targets/', type: :request do
       10.times { create(:target, user: user, topic: topic) }
       post api_v1_targets_path, headers: auth_headers, params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      # expect(json[:error]).to include('there are already 10 targets')
+      expect(json[:target_limit]).to include('You already have 10 targets')
     end
   end
 end

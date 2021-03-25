@@ -21,4 +21,12 @@
 class Target < ApplicationRecord
   belongs_to :user
   belongs_to :topic
+
+  validate :target_limit, on: :create
+
+  private
+
+  def target_limit
+    errors.add :target_limit, 'You already have 10 targets' if user.targets.reload.count >= 10
+  end
 end
