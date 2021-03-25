@@ -27,7 +27,6 @@ ActiveAdmin.register Topic do
                             else
                               ''
                             end
-      # f.file_field :image, as: :file
     end
     actions
   end
@@ -37,7 +36,6 @@ ActiveAdmin.register Topic do
     id_column
     column :name
     column :image do |ad|
-      # image_tag url_for(ad.image) if ad.image.attached?
       image_tag ad.image.variant(resize: '100x100') if ad.image.attached?
     end
     column :created_at
@@ -50,7 +48,6 @@ ActiveAdmin.register Topic do
     attributes_table do
       row :name
       row :image do |ad|
-        # image_tag url_for(ad.image) if ad.image.attached?
         image_tag ad.image.variant(resize: '100x100') if ad.image.attached?
       end
     end
