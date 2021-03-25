@@ -45,7 +45,7 @@ describe 'POST api/v1/targets/', type: :request do
     it 'can\'t create more than 10 targets per user' do
       10.times { create(:target, user: user, topic: topic) }
       post api_v1_targets_path, headers: auth_headers, params: params, as: :json
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:unprocessable_entity)
       # expect(json[:error]).to include('there are already 10 targets')
     end
   end
