@@ -13,8 +13,8 @@ describe 'GET api/v1/target', type: :request do
   end
 
   it 'list my targets' do
-    1.upto(my_targets) { create(:target, user: user, topic: topic).save! }
-    (my_targets + 1).upto(all_targets) { create(:target, user: other_user, topic: topic).save! }
+    1.upto(my_targets) { create(:target, user: user, topic: topic) }
+    (my_targets + 1).upto(all_targets) { create(:target, user: other_user, topic: topic) }
     subject
     expect(JSON.parse(response.body).size).to eq(my_targets)
   end
