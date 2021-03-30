@@ -10,20 +10,16 @@ describe 'Task for delete old targets' do
   end
 
   context 'Remove targets from more than one week' do
-    before do
-      10.times do
-        create(:target, user: user, topic: topic, created_at: Time.zone.now - 7.days)
-      end
-    end
+    before { create(:target, user: user, topic: topic, created_at: Time.zone.now - 7.days) }
     it 'Must delete all old targets' do
       expect {
         Rake::Task['targets:delete:after_a_week'].invoke
-      }.to change(Target, :count).from(10).to(0)
+      }.to change(Target, :count).from(1).to(0)
     end
   end
 
   context 'Don not remove newest targets' do
-    before { 10.times { create(:target, user: user, topic: topic, created_at: Time.zone.now) } }
+    before { create(:target, user: user, topic: topic, created_at: Time.zone.now) }
     it 'Should not delete newest targets' do
       expect {
         Rake::Task['targets:delete:after_a_week'].invoke
