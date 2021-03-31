@@ -36,5 +36,10 @@ describe Api::V1::TargetsController, type: :routing do
       expect(delete: '/api/v1/targets/1').to route_to('api/v1/targets#destroy', id: '1',
                                                                                 format: :json)
     end
+
+    it 'routes to #linked' do
+      expect(get: '/api/v1/targets/1/linked').to route_to('api/v1/targets#linked', id: '1',
+                                                                                   format: :json)
+    end
   end
 end
