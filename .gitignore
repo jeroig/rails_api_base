@@ -37,3 +37,6 @@ config/secrets.yml
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Untrack .vscode settings
+.vscode

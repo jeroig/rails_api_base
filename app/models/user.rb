@@ -21,6 +21,7 @@
 #  provider               :string           default("email"), not null
 #  uid                    :string           default(""), not null
 #  tokens                 :json
+#  gender                 :integer
 #
 # Indexes
 #
@@ -36,9 +37,13 @@ class User < ApplicationRecord
          :recoverable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :targets, dependent: :destroy
+
   validates :uid, uniqueness: { scope: :provider }
 
   before_validation :init_uid
+
+  enum gender: { male: 0, female: 1, not_sure: 2, prefer_not_to_disclose: 3 }
 
   def full_name
     return username if first_name.blank?

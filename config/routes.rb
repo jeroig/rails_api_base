@@ -15,6 +15,11 @@ Rails.application.routes.draw do
       devise_scope :user do
         resource :user, only: %i[update show]
       end
+
+      resources :topics, only: %i[index]
+
+      resources :targets, except: %i[update]
+
       resources :settings, only: [] do
         get :must_update, on: :collection
       end
