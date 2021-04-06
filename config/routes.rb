@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
       resources :topics, only: %i[index]
 
+      get 'targets/:id/linked', to: 'targets#linked', as: 'targets_linked'
       resources :targets, except: %i[update]
 
       resources :settings, only: [] do

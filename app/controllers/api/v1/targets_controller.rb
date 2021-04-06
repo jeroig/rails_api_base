@@ -1,7 +1,13 @@
 module Api
   module V1
     class TargetsController < Api::V1::ApiController
-      before_action :set_target, only: %i[show destroy]
+      before_action :set_target, only: %i[show destroy linked]
+
+      def linked
+        authorize @target, :linked?
+        @targets = @target.linked_targets
+        render :index
+      end
 
       # GET /targets
       # GET /targets.json
