@@ -5,7 +5,7 @@ module Api
 
       def linked
         authorize @target, :linked?
-        @targets = @target.linked
+        @targets = @target.linked_targets
         render :index
       end
 
