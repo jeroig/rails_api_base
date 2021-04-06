@@ -18,6 +18,11 @@ class TargetPolicy < ApplicationPolicy
     # or true - because the Scope filter by current_user
   end
 
+  def linked?
+    record.user_id == user.id
+    # or true - because the Scope filter by current_user
+  end
+
   class Scope < Scope
     def resolve
       # Own target list

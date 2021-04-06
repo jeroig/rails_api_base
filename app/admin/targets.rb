@@ -4,11 +4,7 @@ ActiveAdmin.register Target do
 
   actions :all, except: %i[new edit destroy]
 
-  controller do
-    def scoped_collection
-      super.includes(%i[user topic])
-    end
-  end
+  includes :user, :topic
 
   index do
     selectable_column

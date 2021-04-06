@@ -23,6 +23,13 @@ class Target < ApplicationRecord
   belongs_to :topic
 
   validate :target_limit, on: :create
+  reverse_geocoded_by :latitude, :longitude
+
+  def linked_targets
+    Target.where.not(user_id: user_id).where(topic_id: topic_id).select do |target|
+      distance_to(target) <= (radius + target.radius)
+    end
+  end
 
   private
 
