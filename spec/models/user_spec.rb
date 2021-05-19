@@ -30,6 +30,9 @@
 #  index_users_on_uid_and_provider      (uid,provider) UNIQUE
 #
 
+
+
+
 describe User do
   describe 'validations' do
     subject { build :user }
