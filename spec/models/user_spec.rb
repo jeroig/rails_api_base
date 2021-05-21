@@ -32,7 +32,6 @@
 
 
 
-
 describe User do
   describe 'validations' do
     subject { build :user }
